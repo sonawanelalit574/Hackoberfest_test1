@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Second Plate</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="title-block">
+      <p class="eyebrow">Open weights · this laptop only</p>
+      <h1>Second Plate</h1>
+      <p class="lede">Dinner for the person you cook for. Their food rules stay in a file on this machine, and an open model plans the meal.</p>
+    </div>
+    <div class="status" id="status" aria-live="polite">
+      <span class="dot" id="status-dot"></span>
+      <div>
+        <strong id="status-label">Model</strong>
+        <p id="status-message">Checking this laptop…</p>
+        <div class="bar" id="status-bar-wrap" hidden>
+          <span id="status-bar"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="banner" id="sample-banner" hidden>
+    <p>These rules belong to a sample roommate, so you can try the app before you hand it over. Replace them with the person you actually cook for.</p>
+    <button type="button" class="text-button" id="dismiss-sample">This is my person now</button>
+  </div>
+
+  <main>
+    <section class="panel" aria-labelledby="person-heading">
+      <div class="panel-head">
+        <h2 id="person-heading">Their rules</h2>
+        <button type="button" class="text-button" id="restore-sample">Restore sample</button>
+      </div>
+      <form id="profile-form">
+        <label>
+          Who the plate is for
+          <input id="name" name="name" maxlength="80" required>
+        </label>
+        <label>
+          Allergies
+          <input id="allergies" name="allergies" maxlength="400" placeholder="peanuts, shellfish, lactose">
+        </label>
+        <label>
+          Won't eat
+          <input id="avoids" name="avoids" maxlength="400" placeholder="cilantro, mushrooms">
+        </label>
+        <label>
+          Loves
+          <input id="loves" name="loves" maxlength="400" placeholder="dal, eggs, rice, lemon">
+        </label>
+        <label>
+          How they eat this month
+          <textarea id="notes" name="notes" maxlength="600" rows="3" placeholder="Reheats, one pan, home before 11."></textarea>
+        </label>
+        <div class="row-actions">
+          <button type="submit" class="primary">Save their rules</button>
+          <span id="save-note" class="quiet"></span>
+        </div>
+      </form>
+      <div id="rule-list" class="rule-list"></div>
+      <p class="fine">Naming one nut, one shellfish, or one dairy food blocks that whole family. A won't-eat word blocks that word, plus an obvious alias like dhaniya for cilantro. The list above is what both the model and the checker use.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="tonight-heading">
+      <h2 id="tonight-heading">Tonight</h2>
+      <form id="plan-form">
+        <label>
+          What's in the kitchen
+          <textarea id="fridge" rows="4" placeholder="eggs, rice, onion, tomato, lemon, chili, oil, salt, cumin"></textarea>
+        </label>
+        <div class="split">
+          <label>
+            Minutes
+            <input id="minutes" type="number" min="10" max="120" value="30">
+          </label>
+          <button type="button" class="text-button" id="sample-kitchen">Use a sample kitchen</button>
+        </div>
+        <button type="submit" class="primary" id="plan-button">Plan tonight</button>
+      </form>
+      <div id="meal" class="meal" aria-live="polite"></div>
+      <div id="history-wrap">
+        <h3>Already planned</h3>
+        <ul id="history" class="history"></ul>
+      </div>
+    </section>
+  </main>
+
+  <section class="panel check-panel" aria-labelledby="check-heading">
+    <h2 id="check-heading">Check a recipe you already have</h2>
+    <p class="fine">This part does not use the model. It runs the same food list against anything you paste, including a family note or a page you were about to cook from.</p>
+    <div class="try-row">
+      <button type="button" class="chip" data-recipe="Rice fried in peanut oil">Peanut oil</button>
+      <button type="button" class="chip" data-recipe="Lemon tomato eggs with rice">Egg rice</button>
+      <button type="button" class="chip" data-recipe="Prawn pulao finished with coriander">Prawn and coriander</button>
+    </div>
+    <form id="check-form">
+      <label>
+        Recipe
+        <textarea id="recipe" rows="4" placeholder="Paste ingredients and steps"></textarea>
+      </label>
+      <button type="submit" class="secondary">Check against their rules</button>
+    </form>
+    <div id="check-result" aria-live="polite"></div>
+  </section>
+
+  <details class="panel behavior">
+    <summary>How the cook behaves, and which open model</summary>
+    <p class="fine">This file is the cook's job description. Change it and the next plan follows the new instructions. Swap the model id for any other Transformers.js text-generation model. A bigger open model follows rules more carefully and takes longer on CPU.</p>
+    <label>
+      Model id
+      <input id="model" spellcheck="false">
+    </label>
+    <div class="split">
+      <label>
+        Quantization
+        <select id="dtype">
+          <option value="q4">q4</option>
+          <option value="q4f16">q4f16</option>
+          <option value="q8">q8</option>
+          <option value="fp16">fp16</option>
+          <option value="fp32">fp32</option>
+        </select>
+      </label>
+      <label>
+        Max new tokens
+        <input id="max-tokens" type="number" min="32" max="400" value="180">
+      </label>
+    </div>
+    <button type="button" class="secondary" id="save-settings">Save model settings</button>
+    <label>
+      Cook's instructions
+      <textarea id="prompt" rows="6"></textarea>
+    </label>
+    <button type="button" class="secondary" id="save-prompt">Save instructions</button>
+    <p id="behavior-note" class="quiet"></p>
+  </details>
+
+  <footer>
+    <p>The cook is an open-weight model, loaded through Transformers.js and run on this CPU. The default is Qwen2.5-1.5B-Instruct. The profile never goes to a model API. After the weights are cached, set <code>SECOND_PLATE_OFFLINE=1</code> and the app will refuse to fetch them again.</p>
+  </footer>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+:root {
+  --paper: #efe4d4;
+  --paper-deep: #e4d5c0;
+  --card: #fffaf3;
+  --ink: #241c16;
+  --muted: #6d5e52;
+  --line: #e0d2c0;
+  --terra: #b84324;
+  --terra-deep: #8d3018;
+  --leaf: #1d6a45;
+  --leaf-bg: #e7f3ec;
+  --danger: #8d2e2a;
+  --danger-bg: #f8e8e4;
+  --shadow: 0 16px 40px rgba(60, 36, 18, 0.08);
+  color: var(--ink);
+  font-family: "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(184, 67, 36, 0.08), transparent 32%),
+    var(--paper);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0 auto;
+  max-width: 1120px;
+  padding: 32px 20px 64px;
+}
+
+h1, h2, h3 {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+h1 { font-size: clamp(3.2rem, 7vw, 5.4rem); line-height: 0.9; margin: 0; }
+h2 { font-size: 1.7rem; margin: 0; }
+h3 { font-size: 1.05rem; margin: 0 0 8px; }
+
+p { margin: 0; }
+
+button, input, textarea, select { font: inherit; color: inherit; }
+
+.top {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 28px;
+  align-items: end;
+  margin-bottom: 22px;
+}
+
+.eyebrow, .kicker, .stamp {
+  margin: 0 0 10px;
+  color: var(--terra);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lede { max-width: 38rem; margin-top: 14px; font-size: 1.08rem; line-height: 1.5; }
+
+.status, .panel, .banner {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.status {
+  display: flex;
+  gap: 12px;
+  padding: 16px 18px;
+  min-height: 108px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: var(--muted);
+  flex: none;
+}
+
+.status.ready .dot, .status.idle .dot { background: var(--leaf); }
+.status.downloading .dot, .status.generating .dot { background: var(--terra); }
+.status.error .dot { background: var(--danger); }
+
+#status-message { color: var(--muted); margin-top: 4px; line-height: 1.4; }
+
+.bar {
+  height: 6px;
+  margin-top: 10px;
+  border-radius: 99px;
+  background: var(--paper-deep);
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--terra);
+}
+
+.banner {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  background: #fff4e8;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.panel { padding: 20px; }
+.panel + .panel, .check-panel, .behavior, footer { margin-top: 18px; }
+
+.panel-head, .row-actions, .split, .try-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.panel-head { margin-bottom: 14px; }
+
+form { display: grid; gap: 12px; }
+
+label { display: grid; gap: 6px; font-size: 0.92rem; color: var(--muted); }
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+textarea { resize: vertical; }
+
+input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 2px;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+.primary, .secondary, .text-button, .chip {
+  border-radius: 999px;
+}
+
+.primary, .secondary {
+  padding: 11px 16px;
+  justify-self: start;
+}
+
+.primary { background: var(--terra); color: white; }
+.primary:hover { background: var(--terra-deep); }
+.primary:disabled { background: #c9a396; cursor: wait; }
+
+.secondary, .chip {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.secondary { padding: 10px 14px; }
+.chip { padding: 8px 12px; background: white; }
+
+.text-button {
+  padding: 0;
+  background: none;
+  color: var(--terra-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.quiet, .fine { color: var(--muted); line-height: 1.45; }
+.fine { margin-top: 12px; font-size: 0.92rem; }
+.quiet { font-size: 0.9rem; }
+
+.split { align-items: end; margin-top: 2px; }
+.split label { flex: 1; }
+
+.rule-list { display: grid; gap: 8px; margin-top: 16px; }
+
+.rule {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--paper);
+}
+
+.rule strong { display: block; margin-bottom: 4px; }
+.rule span { color: var(--muted); font-size: 0.92rem; }
+.rule.hard { background: var(--danger-bg); }
+.rule.soft { background: #f6f0e4; }
+
+.meal { margin-top: 16px; }
+
+.recipe {
+  padding: 18px;
+  border-radius: 16px;
+  background:
+    linear-gradient(var(--terra), var(--terra)) top / 100% 4px no-repeat,
+    #fffdf8;
+  border: 1px solid var(--line);
+}
+
+.recipe h3 { font-size: 2rem; line-height: 1.05; margin: 0 0 8px; }
+.because { font-size: 1.05rem; line-height: 1.45; }
+.uses { margin: 12px 0; color: var(--muted); }
+ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 6px; }
+.shop { margin-top: 12px; }
+
+.stamp, .verdict {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  line-height: 1.45;
+}
+
+.safe { background: var(--leaf-bg); color: var(--leaf); }
+.blocked { background: var(--danger-bg); color: var(--danger); }
+.raw {
+  white-space: pre-wrap;
+  padding: 12px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.history { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.history li { padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.history time, .empty { color: var(--muted); font-size: 0.88rem; }
+
+.try-row { justify-content: start; flex-wrap: wrap; margin: 12px 0; }
+
+.behavior { display: block; }
+.behavior summary { cursor: pointer; font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: 1.3rem; }
+.behavior label, .behavior button { margin-top: 12px; }
+
+footer { color: var(--muted); line-height: 1.5; }
+code { font-family: Consolas, monospace; font-size: 0.92em; }
+
+@media (max-width: 800px) {
+  .top, main, .banner, .split { display: block; }
+  .banner .text-button, .split .text-button { margin-top: 10px; }
+  h1 { font-size: 3.4rem; }
+  .status { margin-top: 16px; }
+}

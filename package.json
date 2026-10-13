@@ -1,0 +1,18 @@
+{
+  "name": "second-plate",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A local dinner planner for one person you cook for. Open-weight model, allergy check on the machine.",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test server/*.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@huggingface/transformers": "^3.7.5"
+  }
+}
